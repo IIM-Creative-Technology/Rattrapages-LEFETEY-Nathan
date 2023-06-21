@@ -11,13 +11,18 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    colors: {
+                        'mongoo': '#97B858'
+                    },
                     backgroundImage: {
                         'sunny': "url('/assets/images/sunny-weather-cover.jpg')",
                         'cloudy': "url('/assets/images/cloudy-weather-cover.jpg')",
                         'rainy': "url('/assets/images/rainy-weather-cover.jpg')"
                     },
                     borderRadius: {
-                        'banner': '1rem 1rem 0 0'
+                        'banner': '1rem 1rem 0 0',
+                        'first-btn': '1rem 1rem 0 0',
+                        'last-btn': '0 0 1rem 1rem'
                     },
                     boxShadow: {
                         'card': '0px 8px 16px rgba(0, 0, 0, 0.15)'
@@ -29,17 +34,16 @@
     <title>Pronostique de commandes - Mongoo</title>
 </head>
 <body>
-    <aside>
-        <form id="data-filter">
-            <input type="text" name="city-search" id="city-search" placeholder="Search city...">
-            <input type="range" name="days-range" id="days-range" min="1" max="14" value="14" step="1">
-            <span id="days-range-value"></span>
-            <button type="submit" id="filter-submit">Rechercher</button>
-        </form>
-    </aside>
-    <button id="show-first">Show first</button>
-    <section id="days-data-section" class="w-8/12">
+    <section class="flex items-center justify-center h-[100vh] w-[100vw] gap-4">
+        <aside id="aside-display-buttons" class="flex flex-col w-3/12 md:h-[71vh] rounded-2xl shadow-card overflow-y-auto">
 
+        </aside>
+        <article id="days-data-section" class="w-6/12 lg:h-[71vh]">
+            <div id="welcome-text" class="p-8 h-[70.8vh] shadow-card rounded-2xl">
+                <h1 class="font-bold text-[28px] w-full">Bienvenue sur Mongoo !</h1>
+                <p>Ici vous retrouverez toutes les données météos des prochains jours afin de pouvoir prévoir les commandes à venir et gérer vos stock</p>
+            </div>
+        </article>
     </section>
 </body>
 </html>

@@ -1,15 +1,14 @@
 const API_URL = "https://api.weatherapi.com/v1/";
 const API_KEY = "ec12d30916fe42d596d194859231906";
-const API_CITY = "Paris";
-const DAYS_RANGE = 14;
+let API_CITY = "Paris";
+let DAYS_RANGE = 14;
 
+let daysList = []
+let buttonsList = []
+
+const welcomeText = document.getElementById('welcome-text')
 const daysSection = document.getElementById('days-data-section');
-const showFirst = document.getElementById('show-first');
-showFirst.addEventListener('click', () => {
-    const dayElement = document.getElementById('day-2023-06-21');
-    dayElement.classList.remove('hidden');
-    dayElement.classList.add('flex');
-});
+const asideButtons = document.getElementById('aside-display-buttons')
 
 window.onload = getWeatherData;
 
@@ -27,15 +26,57 @@ async function getWeatherData() {
 
             const dayCard = createDayCard(date, dayCondition, minTemp, maxTemp, launchCondition, launchTemp, dinnerCondition, dinnerTemp);
             daysSection.appendChild(dayCard);
+            const dayButton = createDayDisplayButton(date);
+            asideButtons.appendChild(dayButton)
+
         });
     } catch (error) {
         console.error('Error fetching weather data:', error);
     }
 }
 
+function createDayDisplayButton(date) {
+    const buttonId = `button-day-${date}`
+    buttonsList.push(buttonId)
+    let i = buttonsList.length
+    const displayButton = document.createElement('button')
+    displayButton.id = `${buttonId}`
+    displayButton.innerText = `See Weather of ${date}`
+    displayButton.classList.add('text-mongoo', 'font-bold', 'border-2', 'border-white', 'hover:border-mongoo', 'p-4')
+    if (i === 1) {
+        displayButton.classList.add('rounded-first-btn')
+    } else if (i === 14) {
+        displayButton.classList.add('rounded-last-btn')
+    }
+    displayButton.addEventListener('click', () => {
+        welcomeText.classList.remove('flex')
+        welcomeText.classList.add('hidden')
+
+        daysList.forEach(id => {
+            let day = document.getElementById(id)
+            day.classList.remove('flex')
+            day.classList.add('hidden')
+        })
+
+        buttonsList.forEach(id => {
+            let button = document.getElementById(id)
+            button.classList.remove('bg-mongoo', 'text-white', 'border-mongoo')
+        })
+
+        displayButton.classList.add('bg-mongoo', 'text-white', 'border-mongoo')
+
+        const day = document.getElementById(`day-${date}`)
+        day.classList.remove('hidden')
+        day.classList.add('flex')
+    })
+    return displayButton
+}
+
 function createDayCard(date, dayCondition, minTemp, maxTemp, launchCondition, launchTemp, dinnerCondition, dinnerTemp) {
+    const divId = `day-${date}`
+    daysList.push(divId)
     const dayCard = document.createElement('div');
-    dayCard.id = `day-${date}`;
+    dayCard.id = divId;
     dayCard.classList.add('w-full', 'hidden', 'flex-col', 'rounded-2xl', 'shadow-card', 'pb-4');
 
     const dayCardHeader = createDayCardHeader(dayCondition);
@@ -91,29 +132,28 @@ function createDayInfos(date, minTemp, maxTemp) {
 }
 
 function createCrowdInfo(launchCondition, launchTemp, dinnerCondition, dinnerTemp) {
-    const launchInfos = createCrowdInfoSection(launchCondition, launchTemp);
-    const dinnerInfos = createCrowdInfoSection(dinnerCondition, dinnerTemp);
+    const launchInfos = createCrowdInfoSection(launchCondition, launchTemp, 'launch');
+    const dinnerInfos = createCrowdInfoSection(dinnerCondition, dinnerTemp, 'dinner');
 
     const crowdInfo = document.createElement('div');
-    crowdInfo.classList.add('flex', 'justify-between', 'items-center', 'gap-10', 'px-4');
+    crowdInfo.classList.add('flex', 'flex-col', 'lg:flex-row', 'justify-between', 'items-center', 'gap-10', 'px-4');
     crowdInfo.appendChild(launchInfos);
     crowdInfo.appendChild(dinnerInfos);
 
     return crowdInfo;
 }
 
-function createCrowdInfoSection(condition, temperature) {
+function createCrowdInfoSection(condition, temperature, time) {
     const backgroundImage = getCrowdInfoBackgroundImage(condition);
     const crowds = getCrowdInfoText(condition);
     const color = getCrowdInfoTextColor(condition);
-    console.log(color)
 
     const infoAside = document.createElement('aside');
     infoAside.classList.add(`bg-${backgroundImage}`, 'w-full', 'h-32', 'flex', 'items-end', 'p-4', 'bg-cover', 'bg-no-repeat', 'bg-center', 'rounded-banner');
 
     const timeTag = document.createElement('h4');
-    timeTag.innerText = condition === 'launch' ? 'Launch' : 'Dinner';
-    timeTag.classList.add('text-white', 'text-base', 'capitalize', 'font-medium');
+    timeTag.innerText = time;
+    timeTag.classList.add('text-white', 'text-base', 'uppercase', 'font-bold');
 
     infoAside.appendChild(timeTag);
 
