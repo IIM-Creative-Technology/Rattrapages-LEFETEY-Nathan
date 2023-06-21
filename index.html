@@ -15,6 +15,9 @@
                         'sunny': "url('/assets/images/sunny-weather-cover.jpg')",
                         'cloudy': "url('/assets/images/cloudy-weather-cover.jpg')",
                         'rainy': "url('/assets/images/rainy-weather-cover.jpg')"
+                    },
+                    borderRadius: {
+                        'banner': '1rem 1rem 0 0'
                     }
                 }
             }
@@ -23,7 +26,16 @@
     <title>Pronostique de commandes - Mongoo</title>
 </head>
 <body>
-    <section id="days-data-section">
+    <aside>
+        <form id="data-filter">
+            <input type="text" name="city-search" id="city-search" placeholder="Search city...">
+            <input type="range" name="days-range" id="days-range" min="1" max="14" value="14" step="1">
+            <span id="days-range-value"></span>
+            <button type="submit" id="filter-submit">Rechercher</button>
+        </form>
+    </aside>
+    <button id="show-first">Show first</button>
+    <section id="days-data-section" class="w-8/12">
 
     </section>
 </body>
