@@ -37,7 +37,7 @@ async function getWeatherData() {
 
                 let dayCard = document.createElement('div')
                 dayCard.id = `day-${date}`
-                dayCard.classList.add('w-full', 'hidden', 'flex-col', 'rounded-4')
+                dayCard.classList.add('w-full', 'hidden', 'flex-col', 'rounded-2xl', 'shadow-card', 'pb-4')
 
                 let dayCardHeader = document.createElement('header')
 
@@ -49,7 +49,7 @@ async function getWeatherData() {
 
                 let cardConditionTag = document.createElement('span')
                 cardConditionTag.innerText = `${condition}`
-                cardConditionTag.classList.add('text-white', 'text-base', 'capitalize', 'font-medium')
+                cardConditionTag.classList.add('text-white', 'text-base', 'capitalize', 'font-bold')
 
                 dayCardHeader.appendChild(cardConditionTag)
 
@@ -59,25 +59,27 @@ async function getWeatherData() {
 
                 let cardTitle = document.createElement('h3')
                 cardTitle.innerText = `${date}`
-                cardTitle.classList.add('font-bold')
+                cardTitle.classList.add('font-bold', 'font-[28px]')
 
                 let cardTempTag = document.createElement('p')
                 cardTempTag.innerText = `${minTemp}°C - ${maxTemp}°C`
-                cardTempTag.classList.add('font-bold')
+                cardTempTag.classList.add('font-bold', 'font-[28px]')
 
                 dayInfos.appendChild(cardTitle)
                 dayInfos.appendChild(cardTempTag)
 
 
                 let launchInfos = document.createElement('div')
-                launchInfos.classList.add('flex', 'items-center', 'w-full')
+                launchInfos.classList.add('flex', 'flex-col', 'items-end', 'w-3/6', 'rounded-2xl', 'shadow-card')
                 let launchInfoAside = document.createElement('aside')
 
                 let launchBackgroundImage;
-                if (launchCondition.includes('sun') || launchCondition.includes('sunny') || launchCondition.includes('Sun') || launchCondition.includes('Sunny')) { launchBackgroundImage = "sunny"}
-                else if (launchCondition.includes('rain') || launchCondition.includes('rainy') || launchCondition.includes('Rain') || launchCondition.includes('Rainy')) { launchBackgroundImage = "rainy"}
-                else { launchBackgroundImage = "cloudy"}
-                launchInfoAside.classList.add(`bg-${launchBackgroundImage}`, 'w-4/12', 'px-4', 'py-8', 'bg-cover', 'bg-no-repeat', 'bg-center')
+                let launchCrowds;
+                let launchCrowdsColor;
+                if (launchCondition.includes('sun') || launchCondition.includes('sunny') || launchCondition.includes('Sun') || launchCondition.includes('Sunny')) { launchBackgroundImage = "sunny"; launchCrowds = "Large crowds expected"; launchCrowdsColor = "#b50000"}
+                else if (launchCondition.includes('rain') || launchCondition.includes('rainy') || launchCondition.includes('Rain') || launchCondition.includes('Rainy')) { launchBackgroundImage = "rainy"; launchCrowds = "Average attendance to be expected"; launchCrowdsColor = "#d49400"}
+                else { launchBackgroundImage = "cloudy"; launchCrowds = "Low attendance expected"; launchCrowdsColor = "#05a100"}
+                launchInfoAside.classList.add(`bg-${launchBackgroundImage}`, 'w-full', 'h-32', 'flex', 'items-end', 'p-4', 'bg-cover', 'bg-no-repeat', 'bg-center', 'rounded-banner')
 
                 let launchTimeTag = document.createElement('h4')
                 launchTimeTag.innerText = `Launch`
@@ -87,26 +89,33 @@ async function getWeatherData() {
 
                 let launchInfoDiv = document.createElement('div')
                 launchInfoDiv.id ='clip-path-div'
-                launchInfoDiv.classList.add('w-8/12', 'px-4', 'py-8')
+                launchInfoDiv.classList.add('w-full', 'h-32', 'px-4', 'py-8', 'flex', 'flex-col', 'justify-center', 'gap-4')
 
                 let launchTempTag = document.createElement('h5')
+                launchTempTag.classList.add('font-bold')
                 launchTempTag.innerText = `${launchTemp}°C - ${launchCondition}`
+                let launchCrowdsTag = document.createElement('p')
+                launchCrowdsTag.innerHTML = `<span class="text-[28px]">•</span> ${launchCrowds}`
+                launchCrowdsTag.classList.add(`text-[${launchCrowdsColor}]`, 'flex', 'items-center')
 
                 launchInfoDiv.appendChild(launchTempTag)
+                launchInfoDiv.appendChild(launchCrowdsTag)
 
                 launchInfos.appendChild(launchInfoAside)
                 launchInfos.appendChild(launchInfoDiv)
 
 
                 let dinnerInfos = document.createElement('div')
-                dinnerInfos.classList.add('flex', 'items-center', 'w-full')
+                dinnerInfos.classList.add('flex', 'flex-col', 'items-end', 'w-3/6', 'rounded-2xl', 'shadow-card')
                 let dinnerInfoAside = document.createElement('aside')
 
                 let dinnerBackgroundImage;
-                if (dinnerCondition.includes('sun') || dinnerCondition.includes('sunny') || dinnerCondition.includes('Sun') || dinnerCondition.includes('Sunny')) { dinnerBackgroundImage = "sunny"}
-                else if (dinnerCondition.includes('rain') || dinnerCondition.includes('rainy') || dinnerCondition.includes('Rain') || dinnerCondition.includes('Rainy')) { dinnerBackgroundImage = "rainy"}
-                else { dinnerBackgroundImage = "cloudy"}
-                dinnerInfoAside.classList.add(`bg-${dinnerBackgroundImage}`, 'w-4/12', 'px-4', 'py-8', 'bg-cover', 'bg-no-repeat', 'bg-center')
+                let dinnerCrowds;
+                let dinnerCrowdsColor;
+                if (dinnerCondition.includes('sun') || dinnerCondition.includes('sunny') || dinnerCondition.includes('Sun') || dinnerCondition.includes('Sunny')) { dinnerBackgroundImage = "sunny"; dinnerCrowds = "Large crowds expected"; dinnerCrowdsColor = "#b50000"}
+                else if (dinnerCondition.includes('rain') || dinnerCondition.includes('rainy') || dinnerCondition.includes('Rain') || dinnerCondition.includes('Rainy')) { dinnerBackgroundImage = "rainy"; dinnerCrowds = "Average attendance to be expected"; dinnerCrowdsColor = "#d49400"}
+                else { dinnerBackgroundImage = "cloudy"; dinnerCrowds = "Low attendance expected"; dinnerCrowdsColor = "#05a100"}
+                dinnerInfoAside.classList.add(`bg-${dinnerBackgroundImage}`, 'w-full', 'h-32', 'flex', 'items-end', 'p-4', 'bg-cover', 'bg-no-repeat', 'bg-center', 'rounded-banner')
 
                 let dinnerTimeTag = document.createElement('h4')
                 dinnerTimeTag.innerText = `Dinner`
@@ -116,20 +125,29 @@ async function getWeatherData() {
 
                 let dinnerInfoDiv = document.createElement('div')
                 dinnerInfoDiv.id ='clip-path-div'
-                dinnerInfoDiv.classList.add('w-8/12', 'px-4', 'py-8')
+                dinnerInfoDiv.classList.add('w-full', 'h-32', 'px-4', 'py-8', 'flex', 'flex-col', 'justify-center', 'gap-4')
                 let dinnerTempTag = document.createElement('h5')
-                dinnerTempTag.innerText = `${dinnerTemp}°C - ${dinnerCondition}`
+                dinnerTempTag.classList.add('font-bold')
+                dinnerTempTag.innerText = `${dinnerCondition} - ${dinnerTemp}°C`
+                let dinnerCrowdsTag = document.createElement('p')
+                dinnerCrowdsTag.innerHTML = `<span class="text-[28px]">•</span> ${dinnerCrowds}`
+                dinnerCrowdsTag.classList.add(`text-[${dinnerCrowdsColor}]`, 'flex', 'items-center')
 
                 dinnerInfoDiv.appendChild(dinnerTempTag)
+                dinnerInfoDiv.appendChild(dinnerCrowdsTag)
 
                 dinnerInfos.appendChild(dinnerInfoAside)
                 dinnerInfos.appendChild(dinnerInfoDiv)
 
+                let crowdInfo = document.createElement('div')
+                crowdInfo.classList.add('flex', 'justify-between', 'items-center', 'gap-10', 'px-4')
+                crowdInfo.appendChild(launchInfos)
+                crowdInfo.appendChild(dinnerInfos)
+
 
                 dayCard.appendChild(dayCardHeader)
                 dayCard.appendChild(dayInfos)
-                dayCard.appendChild(launchInfos)
-                dayCard.appendChild(dinnerInfos)
+                dayCard.appendChild(crowdInfo)
 
                 daysSection.appendChild(dayCard)
             })
