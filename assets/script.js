@@ -115,7 +115,7 @@ function getHeaderBackgroundImage(condition) {
 
 function createDayInfos(date, minTemp, maxTemp) {
     const dayInfos = document.createElement('div');
-    dayInfos.classList.add('flex', 'items-center', 'justify-between', 'px-4', 'py-10');
+    dayInfos.classList.add('flex', 'flex-col', 'md:flex-row', 'md:items-center', 'justify-between', 'px-4', 'py-10');
 
     const cardTitle = document.createElement('h3');
     cardTitle.innerText = date;
@@ -172,7 +172,7 @@ function createCrowdInfoSection(condition, temperature, time) {
     infoDiv.appendChild(crowdsTag);
 
     const infoSection = document.createElement('div');
-    infoSection.classList.add('flex', 'flex-col', 'items-end', 'w-3/6', 'rounded-2xl', 'shadow-card');
+    infoSection.classList.add('flex', 'flex-col', 'items-end', 'w-full', 'lg:w-3/6', 'rounded-2xl', 'shadow-card');
     infoSection.appendChild(infoAside);
     infoSection.appendChild(infoDiv);
 
